@@ -4,34 +4,48 @@ curdir = pwd;
 [~,config]=wfdbloadlib;
 eval(['cd ' config.WFDB_JAVA_HOME filesep y])
 [t,sig] = rdsamp(x,[],6000); % for 20000 samples
-sqrs(x); %create qrs annotation file first
-ecgpuwave(x,'test',[],[],'qrs');
-pwave = rdann(x,'test',[],5000,[],'p'); %P-peaks
+%sqrs(x); %create qrs annotation file first
+%ecgpuwave(x,'test',[],[],'qrs');
+pwave = rdann(x,'test',[],6000,[],'p'); %P-peaks
 %twave = rdann(x,'test',[],5000,[],'t'); % T-peaks
-swave = rdann(x,'test',[],5000,[],'('); %starts
-ewave = rdann(x,'test',[],5000,[],')'); %ends
+swave = rdann(x,'test',[],6000,[],'('); %starts
+ewave = rdann(x,'test',[],6000,[],')'); %ends
+
+qrswave = rdann(x,'test',[],6000,[],'N'); %r peaks
+windowSize = 10;
+b = (1/windowSize)*ones(1,windowSize);
+a = 1;
+%sig(:,1)=filter(b,a,sig(:,1));
 sig(:,1)=smooth(sig(:,1));
-k=1;
 %load('Pavg.mat');
 P=transpose(P);
-for i=2:length(swave)
-if(swave(i)<pwave(1))
-    k=i;
-else
-    break;
-end
-end
+tt=1;
+
 corr=[];l=[];j=1;
-for i=k:3:length(ewave)
+k=1;
+for i=2:length(swave)-1
+ %  length( pwave)
+if(tt<=length(pwave)&&swave(i)<pwave(tt))
+    k=i;
+elseif(tt>length(pwave))break;
+else
     
-pw{j}=sig(swave(i):ewave(i),1);
+pw{j}=sig(swave(k):ewave(k),1);
 j=j+1;
-l=[l;length(swave(i):ewave(i))];
+l=[l;length(swave(k):ewave(k))];
+tt=tt+1;
+end
+end
+%for i=k:3:length(ewave)
+    
+%pw{j}=sig(swave(i):ewave(i),1);
+%j=j+1;
+%l=[l;length(swave(i):ewave(i))];
 
 %corr=[corr;corrcoef()]
 %if(m<l)m=l;
 %end
-end
+%end
 %length(P)
 
 %l
@@ -49,8 +63,12 @@ for i=1:length(l)
     
         
 end
-n=length(corr(corr>=0.2));
-R=n/length(corr)
+cc=max(corr);
+ncb=length(qrswave);
+n=length(corr((cc-corr)>=0.2))+ncb-length(corr);
+
+R=n/ncb;
+
 end
 %length(P)
 

@@ -9,12 +9,20 @@ p={};qrs={};t={};tp={};tqrs={};tt={};
 s=[20 22 7 11 8 6 6];
 h=[];
 M=zeros(3,3);tot=0;tot=0;RRAF=[];DKLAF=[];EAF=[];
+
+EntropyNorm=[];esmoothNorm=[];stempNorm=[];stempsNorm=[];
 for j=1:23
     if(j==14)continue;end
     x=strcat(strcat('af(',int2str(j)),')')
     y='af';
     M=probMat(x,y)
     RRAF=[RRAF;M(2,2)];
+    
+   [Entropy,esmooth,stemp,stemps]=spect(x,y);
+    EntropyNorm=[EntropyNorm;Entropy];
+   esmoothNorm=[esmoothNorm;esmooth];
+   stempNorm=[stempNorm;stemp];
+   stempsNorm=[stempsNorm;stemps];
     [D E]=HRSimilarity(x,y);
     DKLAF=[DKLAF;D];
     EAF=[EAF;E];

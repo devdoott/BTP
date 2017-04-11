@@ -1,0 +1,10 @@
+load('FinalFeatures.mat');
+input=[DKLAF';EAF';EntropyNorm';RRAF';h';stempNorm']
+target=typ';
+net=feedforwardnet;
+net=train(net,input,target);
+view(net)
+output=net(input);
+mean(output-target)
+perf=perform(net,output,target)
+net.layerWeights
