@@ -13,7 +13,7 @@ load('Pavg.mat');
 RRAF=[];DKLAF=[];EAF=[];h=[];
 EntropyNorm=[];esmoothNorm=[];stempNorm=[];stempsNorm=[];typ=[];
 final=[];
-for j=1:23
+for j=14:14
     RRAF=[];DKLAF=[];EAF=[];h=[];
     EntropyNorm=[];esmoothNorm=[];stempNorm=[];stempsNorm=[];typ=[];
     if(j==14)continue;end
@@ -39,12 +39,12 @@ for j=1:23
 %hold on
 %p{i}=P;qrs{i}=QRS;t{i}=T;
 end
-for j=1:7
+for j=1:1
     
 RRAF=[];DKLAF=[];EAF=[];h=[];
 EntropyNorm=[];esmoothNorm=[];stempNorm=[];stempsNorm=[];typ=[];
     y=strcat('person_',int2str(j))
-for i=1:s(j)
+for i=1:1
     
 RRAF=[];DKLAF=[];EAF=[];h=[];
 EntropyNorm=[];esmoothNorm=[];stempNorm=[];stempsNorm=[];typ=[];
@@ -70,16 +70,15 @@ EntropyNorm=[];esmoothNorm=[];stempNorm=[];stempsNorm=[];typ=[];
    %figure(j) 
    %plot(f,amp)
     %hold on
-    
-    input=[DKLAF';EAF';EntropyNorm';RRAF';h';stempNorm']
-
-    final=[final;finalProbability(input)];
+    [output input]=processing(x,y)
+    %input=[DKLAF';EAF';EntropyNorm';RRAF';h';stempNorm']
+    %final=[final;finalProbability(input)];
 end
 
 end
 %M=M./tot
-plot(final);
-folder='';
+%plot(final);
+%folder='';
 %save(strcat(folder,'AFprobMat.mat'),'M');
 
 %save(strcat(folder,'FinalFeatures.mat'),'RRAF','EAF','DKLAF','EntropyNorm','esmoothNorm','stempNorm','stempsNorm','h','typ');
