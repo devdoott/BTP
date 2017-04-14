@@ -146,10 +146,8 @@ while ( t1+60/bpm+1/sample_freq <= duration) %space to insert another qrs pulse 
         if(t2~=1)
         t1=t2; 
         end
-        
-d=0.1+(rand*0.05); %.07 to .120 seconds, QRS width
-at=500+(rand*700); %amplitude of t-wave, 400 to 1200 uv
-PVCwidth=0.12+(rand*(0.05)); %seconds, QRS width of PVC, usually .12 to .17
+        en normal RR interval
+PVCwidth=0.12+rand*(0.0); %seconds, QRS width of PVC, usually .12 to .17
 [Q1 qloc1 rloc1 sloc1 tloc1]=QRSpulse(d,60/((1-earlyfactor)*RR-0.4375*PVCwidth),fs,RandAmp(org_amp));
 [Q2 qloc2 rloc2 sloc2 tloc2]=QRSpulse(PVCwidth,bpm*(1-earlyfactor),fs,PVCamp);
 [Q3 qloc3 rloc3 sloc3 tloc3]=QRSpulse(d,bpm,fs, RandAmp(org_amp));
